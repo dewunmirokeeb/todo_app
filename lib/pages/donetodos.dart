@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TotalTodos extends StatelessWidget {
-  const TotalTodos({Key? key}) : super(key: key);
+class DoneTodo extends StatelessWidget {
+  const DoneTodo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
-import 'package:eventscheduler/models/todopagedrawertile.dart.dart';
 import 'package:eventscheduler/routes/routes.dart';
+import 'package:eventscheduler/widgets/todopagedrawertile.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../widgets/appbutton.dart';
@@ -55,11 +55,11 @@ class UserProfile extends StatelessWidget {
                         },
                       ),
                       TodoPageDrawerTile(
-                        icon: Icons.drafts_sharp,
-                        tiletitle: 'Drafts',
+                        icon: Icons.done,
+                        tiletitle: 'Done',
                         onTapp: () {
                           Navigator.of(context).pushNamed(
-                            RouteManager.drafttodopage,
+                            RouteManager.donetodopage,
                           );
                         },
                       ),

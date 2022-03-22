@@ -1,5 +1,5 @@
 import 'package:eventscheduler/aboutdeveloper.dart';
-import 'package:eventscheduler/pages/drafts_todo.dart';
+import 'package:eventscheduler/pages/donetodos.dart';
 import 'package:eventscheduler/pages/settingspage.dart';
 import 'package:eventscheduler/pages/starred_todos.dart';
 import 'package:eventscheduler/pages/trash_todos.dart';
@@ -14,7 +14,7 @@ class RouteManager {
   static const String registerpage = '/RegisterPage';
   static const String todopage = '/RegisterPage/TodoPage';
   static const String starredtodopage = '/RegisterPage/TodoPage/starredtodo';
-  static const String drafttodopage = '/RegisterPage/TodoPage/drafttodo';
+  static const String donetodopage = '/RegisterPage/TodoPage/drafttodo';
   static const String trashtodopage = '/RegisterPage/TodoPage/trashtodo';
   static const String aboutdeveloperpage =
       '/RegisterPage/TodoPage/aboutdeveloper';
@@ -38,9 +38,9 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => const StarredTodo(),
         );
-      case drafttodopage:
+      case donetodopage:
         return MaterialPageRoute(
-          builder: (context) => const DraftTodo(),
+          builder: (context) => const DoneTodo(),
         );
       case trashtodopage:
         return MaterialPageRoute(

@@ -1,10 +1,10 @@
-import 'package:eventscheduler/pages/current_todo.dart';
-import 'package:eventscheduler/pages/future_todo.dart';
-import 'package:eventscheduler/pages/total_todos.dart';
+import 'package:eventscheduler/pages/doing.dart';
+import 'package:eventscheduler/pages/todos.dart';
+import 'package:eventscheduler/pages/draftstodo.dart';
 import 'package:flutter/material.dart';
 import '../constants/colorconstants.dart';
 import '../methods/alertshowdialog.dart';
-import '../models/user_profile.dart';
+import '../widgets/user_profile.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({Key? key}) : super(key: key);
@@ -15,18 +15,15 @@ class TodoPage extends StatefulWidget {
 
 class _TodoPageState extends State<TodoPage> {
   late TextEditingController todotitlecontroller;
-  late TextEditingController moretodoinfocontroller;
   @override
   void initState() {
     super.initState();
     todotitlecontroller = TextEditingController();
-    moretodoinfocontroller = TextEditingController();
   }
 
   @override
   void dispose() {
     todotitlecontroller.dispose();
-    moretodoinfocontroller.dispose();
     super.dispose();
   }
 
@@ -34,7 +31,7 @@ class _TodoPageState extends State<TodoPage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      initialIndex: 2,
+      initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Constantcolors.mainappbackgroundcolor1,
@@ -54,7 +51,6 @@ class _TodoPageState extends State<TodoPage> {
                     alertdialogmethod(
                       context,
                       todotitlecontroller,
-                      moretodoinfocontroller,
                     );
                   },
                   icon: const Icon(
@@ -75,9 +71,6 @@ class _TodoPageState extends State<TodoPage> {
                     ),
                   );
                 }),
-                const SizedBox(
-                  width: 20,
-                )
               ],
             ),
           ],
@@ -85,30 +78,30 @@ class _TodoPageState extends State<TodoPage> {
             tabs: [
               Tab(
                 icon: Icon(
-                  Icons.folder,
+                  Icons.folder_open,
                 ),
-                text: 'Future Todo',
+                text: 'Doing',
               ),
               Tab(
                 icon: Icon(
-                  Icons.folder_open,
+                  Icons.folder,
                 ),
-                text: 'Current Todo',
+                text: 'Todoos',
               ),
               Tab(
                 icon: Icon(
                   Icons.create_new_folder,
                 ),
-                text: 'Total todos',
+                text: 'Drafts',
               ),
             ],
           ),
         ),
         body: const TabBarView(
           children: [
-            FutureTodo(),
-            CurrentTodo(),
-            TotalTodos(),
+            DoingTodo(),
+            TodosTodo(),
+            DraftTodos(),
           ],
         ),
         endDrawer: const UserProfile(),
