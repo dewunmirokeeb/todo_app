@@ -80,7 +80,11 @@ class TodoCard extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  todo.title,
+                  todo.created.day.toString() +
+                      '-' +
+                      todo.created.month.toString() +
+                      '-' +
+                      todo.created.year.toString(),
                   style: const TextStyle(
                       color: Colors.black,
                       fontSize: 15,
