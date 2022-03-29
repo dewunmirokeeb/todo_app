@@ -1,7 +1,10 @@
 import 'package:eventscheduler/constants/colorconstants.dart';
+import 'package:eventscheduler/services/user_service.dart';
+import 'package:eventscheduler/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:eventscheduler/models/user.dart';
+import 'package:provider/provider.dart';
 import '../widgets/appbutton.dart';
 import '../widgets/apptextfield.dart';
 
@@ -69,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Focus(
                       onFocusChange: (value) async {},
                       child: AppTextField(
-                        usernamecontroller: usernamecontroller,
+                        textfieldcontroller: usernamecontroller,
                         labelText: 'Please Enter your username',
                       ),
                     ),
@@ -84,13 +87,33 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     AppTextField(
-                      usernamecontroller: namecontroller,
+                      textfieldcontroller: namecontroller,
                       labelText: 'Please Enter your name',
                     ),
                     APPButton(
                       buttontag: 'Register',
                       color: Constantcolors.loginbuttoncolor,
-                      onpressed: () {},
+                      onpressed: () async {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        if (usernamecontroller.text.isEmpty ||
+                            namecontroller.text.isEmpty) {
+                          showsnackbar(context, 'Please enter all fields');
+                        } else {
+                          User newuser = User(
+                              username: usernamecontroller.text.trim(),
+                              name: namecontroller.text.trim());
+                          String result = await context
+                              .read<UserService>()
+                              .createuser(newuser);
+                          if (result != 'ok ') {
+                            showsnackbar(context, result);
+                          } else {
+                            showsnackbar(
+                                context, 'New user successfully created');
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
                     ),
                   ],
                 ),

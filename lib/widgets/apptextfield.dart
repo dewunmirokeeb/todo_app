@@ -5,12 +5,12 @@ class AppTextField extends StatelessWidget {
   const AppTextField({
     Key? key,
     this.labelText = '',
-    required this.usernamecontroller,
+    required this.textfieldcontroller,
     this.focusedbordercolor = Constantcolors.defaultbuttoncolor,
     this.enabledbordercolor = Constantcolors.defaultbuttoncolor,
   }) : super(key: key);
   final String labelText;
-  final TextEditingController usernamecontroller;
+  final TextEditingController textfieldcontroller;
   final Color focusedbordercolor;
   final Color enabledbordercolor;
 
@@ -20,7 +20,7 @@ class AppTextField extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: TextField(
         style: const TextStyle(color: Colors.white, fontSize: 20),
-        controller: usernamecontroller,
+        controller: textfieldcontroller,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(

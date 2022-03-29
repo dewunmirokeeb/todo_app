@@ -57,8 +57,10 @@ class Todo {
   @override
   // ignore: avoid_renaming_method_parameters
   bool operator ==(covariant Todo todo) {
-    return (username == todo.username) &&
-        (title.toUpperCase().compareTo(todo.title.toUpperCase()) == 0);
+    // ignore: unnecessary_this
+    return (this.username == todo.username) &&
+        // ignore: unnecessary_this
+        (this.title.toUpperCase().compareTo(todo.title.toUpperCase()) == 0);
   }
 
   @override

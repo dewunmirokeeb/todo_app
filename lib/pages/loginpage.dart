@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                       ]),
                 ),
                 AppTextField(
-                  usernamecontroller: usernamecontroller,
+                  textfieldcontroller: usernamecontroller,
                   labelText: 'Please Enter your username',
                 ),
                 APPButton(

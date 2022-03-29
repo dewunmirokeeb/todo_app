@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:eventscheduler/models/todo.dart';
 import 'package:eventscheduler/models/user.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,42 +10,40 @@ class TodoDataBase {
   static Database? _database;
   TodoDataBase._initialize();
 
-  Future _createdb(Database db, int version) async {
-    const userusernametype = 'Text primary key not null';
-    const texttype = 'Text Not Null';
-    const booltype = 'Bool not null';
+  Future _createDB(Database db, int version) async {
+    final userusernametype = 'Text primary key not null';
+    final texttype = 'Text Not Null';
+    final booltype = 'Bool not null';
 
-    await db.execute('''
-        create table $usertable(
-            ${UserFields.username} $userusernametype,
-            ${UserFields.name}  $texttype,
-        )''');
+    await db.execute('''CREATE TABLE $usertable (
+      ${UserFields.username} $userusernametype,
+      ${UserFields.name} $texttype
+    )''');
 
-    await db.execute('''
-        create table $todotable(
-            ${TodoFields.username} $texttype,
-            ${TodoFields.title}  $texttype,
-            ${TodoFields.done}  $booltype,
-            ${TodoFields.starred}  $booltype,
-            ${TodoFields.doing}  $booltype,
-            ${TodoFields.created}  $texttype,
-            FOREIGN KEY (${TodoFields.username}) REFEREMCES $usertable (${UserFields.username}),
-        )''');
+    await db.execute('''CREATE TABLE $todotable (
+      ${TodoFields.username} $texttype,
+      ${TodoFields.title} $texttype,
+      ${TodoFields.done} $booltype,
+      ${TodoFields.created} $texttype,
+      ${TodoFields.doing} $booltype,
+      ${TodoFields.starred} $booltype,
+      FOREIGN KEY (${TodoFields.username}) REFERENCES $usertable (${UserFields.username})
+    )''');
   }
 
-  Future _onconfigure(Database db) async {
-    await db.execute('');
+  Future _onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  Future<Database> _initdb(String filename) async {
+  Future<Database> _initDB(String filename) async {
     final databasepath = await getDatabasesPath();
     final path = join(databasepath, filename);
 
     return await openDatabase(
       path,
       version: 1,
-      onCreate: _createdb,
-      onConfigure: _onconfigure,
+      onCreate: _createDB,
+      onConfigure: _onConfigure,
     );
   }
 
@@ -56,7 +56,7 @@ class TodoDataBase {
     if (_database != null) {
       return _database;
     } else {
-      _database = await _initdb('todo.db');
+      _database = await _initDB('todo.db');
       return _database;
     }
   }
@@ -112,7 +112,10 @@ class TodoDataBase {
 
   Future<Todo> createTodo(Todo todo) async {
     final db = await instance.database;
-    await db!.insert(todotable, todo.tojson());
+    await db!.insert(
+      todotable,
+      todo.tojson(),
+    );
     return todo;
   }
 

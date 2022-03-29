@@ -1,4 +1,5 @@
-const String usertable = 'user';
+// ignore: prefer_const_declarations
+final String usertable = 'user';
 
 class UserFields {
   static const String username = 'username';
