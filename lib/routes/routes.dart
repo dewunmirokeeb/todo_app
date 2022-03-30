@@ -1,10 +1,9 @@
 import 'package:eventscheduler/aboutdeveloper.dart';
 import 'package:eventscheduler/pages/donetodos.dart';
+import 'package:eventscheduler/pages/draftstodo.dart';
 import 'package:eventscheduler/pages/settingspage.dart';
-import 'package:eventscheduler/pages/starred_todos.dart';
 import 'package:eventscheduler/pages/trash_todos.dart';
 import 'package:flutter/material.dart';
-
 import '../pages/loginpage.dart';
 import '../pages/registerpage.dart';
 import '../pages/todopage.dart';
@@ -13,8 +12,8 @@ class RouteManager {
   static const String loginpage = '/';
   static const String registerpage = '/RegisterPage';
   static const String todopage = '/RegisterPage/TodoPage';
-  static const String starredtodopage = '/RegisterPage/TodoPage/starredtodo';
-  static const String donetodopage = '/RegisterPage/TodoPage/drafttodo';
+  static const String drafttodopage = '/RegisterPage/TodoPage/drafttodo';
+  static const String donetodopage = '/RegisterPage/TodoPage/donettodo';
   static const String trashtodopage = '/RegisterPage/TodoPage/trashtodo';
   static const String aboutdeveloperpage =
       '/RegisterPage/TodoPage/aboutdeveloper';
@@ -34,9 +33,9 @@ class RouteManager {
         return MaterialPageRoute(
           builder: (context) => const TodoPage(),
         );
-      case starredtodopage:
+      case drafttodopage:
         return MaterialPageRoute(
-          builder: (context) => const StarredTodo(),
+          builder: (context) => const DraftTodos(),
         );
       case donetodopage:
         return MaterialPageRoute(

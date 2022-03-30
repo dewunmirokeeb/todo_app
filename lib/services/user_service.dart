@@ -23,6 +23,7 @@ class UserService with ChangeNotifier {
     } catch (e) {
       result = getHumanReadableError(e.toString());
     }
+
     return result;
   }
 
@@ -51,12 +52,15 @@ class UserService with ChangeNotifier {
   Future<String> createuser(User user) async {
     String result = 'ok';
     _busycreate = true;
+    Future.delayed(const Duration(seconds: 2));
     notifyListeners();
     try {
       await TodoDataBase.instance.createuser(user);
     } catch (e) {
       result = getHumanReadableError(e.toString());
     }
+
+    await Future.delayed(const Duration(seconds: 2));
     _busycreate = false;
     notifyListeners();
     return result;
@@ -67,7 +71,7 @@ String getHumanReadableError(String message) {
   if (message.contains('UNIQUE constraint failed')) {
     return 'This user already exist in the data base, please choose a new user name';
   }
-  if (message.contains('not found in the database')) {
+  if (message.contains('not found in the data base.')) {
     return 'The user does not exist in the database. please regster first';
   }
   return message;

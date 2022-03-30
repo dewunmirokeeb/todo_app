@@ -1,4 +1,9 @@
+import 'package:eventscheduler/models/todo.dart';
+import 'package:eventscheduler/services/todoservice.dart';
+import 'package:eventscheduler/services/user_service.dart';
+import 'package:eventscheduler/widgets/dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<dynamic> alertdialogmethod(
   BuildContext context,
@@ -36,7 +41,33 @@ Future<dynamic> alertdialogmethod(
             ),
           ),
           TextButton(
-            onPressed: () async {},
+            onPressed: () async {
+              if (todotitlecontroller.text.isEmpty) {
+                showsnackbar(context, 'Enter a todo then save');
+              } else {
+                String username =
+                    await context.read<UserService>().currentuser.username;
+                Todo todo = Todo(
+                  username: username,
+                  title: todotitlecontroller.text,
+                  created: DateTime.now(),
+                );
+                if (context.read<TodoService>().todos.contains(todo)) {
+                  showsnackbar(
+                      context, 'Duplicate value please enter a new todo');
+                } else {
+                  String result =
+                      await context.read<TodoService>().createtodo(todo);
+                  if (result == 'ok') {
+                    showsnackbar(context, 'New todo successfully creatd ');
+                    todotitlecontroller.text = '';
+                  } else {
+                    showsnackbar(context, result);
+                  }
+                  Navigator.pop(context);
+                }
+              }
+            },
             child: const Text(
               'save',
               style: TextStyle(

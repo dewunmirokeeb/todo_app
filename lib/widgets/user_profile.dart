@@ -1,7 +1,9 @@
 import 'package:eventscheduler/routes/routes.dart';
+import 'package:eventscheduler/services/user_service.dart';
 import 'package:eventscheduler/widgets/todopagedrawertile.dart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../widgets/appbutton.dart';
 
 class UserProfile extends StatelessWidget {
@@ -11,6 +13,7 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String name = context.read<UserService>().currentuser.name;
     return SizedBox(
       width: 300,
       child: SafeArea(
@@ -28,7 +31,7 @@ class UserProfile extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'Username\'s Todo',
+                      '$name\'s Todo',
                       style: GoogleFonts.caveat(
                         color: Colors.red.withGreen(10000),
                         fontSize: 40,
@@ -47,11 +50,11 @@ class UserProfile extends StatelessWidget {
                     children: [
                       const SizedBox(height: 60),
                       TodoPageDrawerTile(
-                        icon: Icons.star,
-                        tiletitle: 'Starred',
+                        icon: Icons.create_new_folder_sharp,
+                        tiletitle: 'Drafts',
                         onTapp: () {
                           Navigator.of(context)
-                              .pushNamed(RouteManager.starredtodopage);
+                              .pushNamed(RouteManager.drafttodopage);
                         },
                       ),
                       TodoPageDrawerTile(

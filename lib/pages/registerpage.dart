@@ -1,5 +1,6 @@
 import 'package:eventscheduler/constants/colorconstants.dart';
 import 'package:eventscheduler/services/user_service.dart';
+import 'package:eventscheduler/widgets/appprogressindicator.dart';
 import 'package:eventscheduler/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,21 +71,43 @@ class _RegisterPageState extends State<RegisterPage> {
                           ]),
                     ),
                     Focus(
-                      onFocusChange: (value) async {},
+                      onFocusChange: (value) async {
+                        if (!value) {
+                          String result = await context
+                              .read<UserService>()
+                              .checkifuserexist(usernamecontroller.text.trim());
+                          if (result == 'ok') {
+                            context.read<UserService>().userexist = true;
+                          } else {
+                            context.read<UserService>().userexist = false;
+                            if (!result.contains(
+                                'The user does not exist in the database. please regster first')) {
+                              showsnackbar(context, result);
+                            }
+                          }
+                        }
+                      },
                       child: AppTextField(
                         textfieldcontroller: usernamecontroller,
                         labelText: 'Please Enter your username',
                       ),
                     ),
-                    const Text(
-                      'User name exist please choose another',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 70, 7, 3),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        fontStyle: FontStyle.italic,
-                        decoration: TextDecoration.underline,
-                      ),
+                    Selector<UserService, bool>(
+                      selector: (context, value) => value.userexist,
+                      builder: (context, value, child) {
+                        return value
+                            ? const Text(
+                                'User name exist please choose another',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 70, 7, 3),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  fontStyle: FontStyle.italic,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              )
+                            : Container();
+                      },
                     ),
                     AppTextField(
                       textfieldcontroller: namecontroller,
@@ -105,11 +128,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           String result = await context
                               .read<UserService>()
                               .createuser(newuser);
-                          if (result != 'ok ') {
+                          if (result != 'ok') {
                             showsnackbar(context, result);
                           } else {
                             showsnackbar(
-                                context, 'New user successfully created');
+                                context, 'Account successfully created!');
                             Navigator.pop(context);
                           }
                         }
@@ -139,9 +162,23 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-          //const AppProgressIndicator()
+          Selector<UserService, bool>(
+            selector: (context, value) => value.busycreate,
+            builder: (context, value, child) {
+              return value ? const AppProgressIndicator() : Container();
+            },
+          ),
         ],
       ),
     );
   }
 }
+
+
+//  Consumer<UserService>(
+//             builder: (context, value, child) {
+//               return value.busycreate
+//                   ? const AppProgressIndicator()
+//                   : Container();
+//             },
+//           ),

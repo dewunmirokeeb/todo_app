@@ -1,8 +1,12 @@
 import 'package:eventscheduler/constants/colorconstants.dart';
 import 'package:eventscheduler/routes/routes.dart';
+import 'package:eventscheduler/services/user_service.dart';
+import 'package:eventscheduler/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../services/todoservice.dart';
 import '../widgets/appbutton.dart';
 import '../widgets/apptextfield.dart';
 
@@ -68,8 +72,25 @@ class _LoginPageState extends State<LoginPage> {
                 APPButton(
                   buttontag: 'continue',
                   color: Constantcolors.loginbuttoncolor,
-                  onpressed: () {
-                    Navigator.of(context).pushNamed(RouteManager.todopage);
+                  onpressed: () async {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    if (usernamecontroller.text.isEmpty) {
+                      showsnackbar(
+                          context, 'Please Enter your user name to login');
+                    } else {
+                      String result = await context
+                          .read<UserService>()
+                          .getuser(usernamecontroller.text.trim());
+                      if (result != 'ok') {
+                        showsnackbar(context, result);
+                      } else {
+                        String username =
+                            context.read<UserService>().currentuser.username;
+                        context.read<TodoService>().gettodos(username);
+                        Navigator.of(context).pushNamed(RouteManager.todopage);
+                        debugPrint(username);
+                      }
+                    }
                   },
                 ),
                 TextButton(

@@ -1,6 +1,6 @@
 import 'package:eventscheduler/pages/doing.dart';
+import 'package:eventscheduler/pages/starred_todos.dart';
 import 'package:eventscheduler/pages/todos.dart';
-import 'package:eventscheduler/pages/draftstodo.dart';
 import 'package:flutter/material.dart';
 import '../constants/colorconstants.dart';
 import '../methods/alertshowdialog.dart';
@@ -83,16 +83,14 @@ class _TodoPageState extends State<TodoPage> {
                 text: 'Doing',
               ),
               Tab(
+                icon: Icon(Icons.star),
+                text: 'Starred Todos',
+              ),
+              Tab(
                 icon: Icon(
                   Icons.folder,
                 ),
                 text: 'Todoos',
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.create_new_folder,
-                ),
-                text: 'Drafts',
               ),
             ],
           ),
@@ -100,8 +98,8 @@ class _TodoPageState extends State<TodoPage> {
         body: const TabBarView(
           children: [
             DoingTodo(),
+            StarredTodo(),
             TodosTodo(),
-            DraftTodos(),
           ],
         ),
         endDrawer: const UserProfile(),
