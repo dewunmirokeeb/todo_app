@@ -1,3 +1,4 @@
+import 'package:eventscheduler/widgets/messagewhenlistisempty.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatelessWidget {
@@ -5,8 +6,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-    );
+    return const MessageWhenListisEmpty(
+        message: 'Todo settings page yet to be implemented');
   }
 }

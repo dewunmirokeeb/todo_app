@@ -67,8 +67,8 @@ class UserProfile extends StatelessWidget {
                         },
                       ),
                       TodoPageDrawerTile(
-                        icon: Icons.delete,
-                        tiletitle: 'Trash',
+                        icon: Icons.remember_me_sharp,
+                        tiletitle: 'Todos with set reminder',
                         onTapp: () {
                           Navigator.of(context).pushNamed(
                             RouteManager.trashtodopage,

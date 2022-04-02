@@ -2,7 +2,7 @@ import 'package:eventscheduler/aboutdeveloper.dart';
 import 'package:eventscheduler/pages/donetodos.dart';
 import 'package:eventscheduler/pages/draftstodo.dart';
 import 'package:eventscheduler/pages/settingspage.dart';
-import 'package:eventscheduler/pages/trash_todos.dart';
+import 'package:eventscheduler/pages/todowithalerm_todos.dart';
 import 'package:flutter/material.dart';
 import '../pages/loginpage.dart';
 import '../pages/registerpage.dart';

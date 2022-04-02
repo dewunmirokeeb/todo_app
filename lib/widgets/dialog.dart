@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void showsnackbar(BuildContext context, String message) {
   final snackBar = SnackBar(
-    duration: const Duration(seconds: 10),
+    duration: const Duration(seconds: 2),
     elevation: 10,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(

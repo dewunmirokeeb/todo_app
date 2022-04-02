@@ -1,3 +1,4 @@
+import 'package:eventscheduler/widgets/messagewhenlistisempty.dart';
 import 'package:flutter/material.dart';
 
 class TrashTodo extends StatelessWidget {
@@ -5,10 +6,7 @@ class TrashTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 500,
-      height: 500,
-      color: Colors.brown[1000],
-    );
+    return const MessageWhenListisEmpty(
+        message: 'This feature is yet to be implemented');
   }
 }

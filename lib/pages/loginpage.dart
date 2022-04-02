@@ -5,10 +5,10 @@ import 'package:eventscheduler/widgets/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../services/todoservice.dart';
 import '../widgets/appbutton.dart';
 import '../widgets/apptextfield.dart';
+import '../enums/todotypeenum.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -86,9 +86,23 @@ class _LoginPageState extends State<LoginPage> {
                       } else {
                         String username =
                             context.read<UserService>().currentuser.username;
-                        context.read<TodoService>().gettodos(username);
+                        await context.read<TodoService>().gettodos(
+                              username,
+                              todotype.doing,
+                            );
+                        await context.read<TodoService>().gettodos(
+                              username,
+                              todotype.starr,
+                            );
+                        await context.read<TodoService>().gettodos(
+                              username,
+                              todotype.todos,
+                            );
+                        await context.read<TodoService>().gettodos(
+                              username,
+                              todotype.done,
+                            );
                         Navigator.of(context).pushNamed(RouteManager.todopage);
-                        debugPrint(username);
                       }
                     }
                   },

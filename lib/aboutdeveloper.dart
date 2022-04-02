@@ -1,3 +1,4 @@
+import 'package:eventscheduler/widgets/messagewhenlistisempty.dart';
 import 'package:flutter/material.dart';
 
 class AboutMe extends StatelessWidget {
@@ -5,9 +6,10 @@ class AboutMe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text('I write about my self here and add my pictures'),
-      color: Colors.orange[100],
+    return const Scaffold(
+      body: MessageWhenListisEmpty(
+          message:
+              'Hy every one, i am Adedokun Rokeeb Adewunmi a Flutter Developer.... more information about me can be gotten on my portfolio website which i am Stil doing,  thank you'),
     );
   }
 }

@@ -29,6 +29,36 @@ class TodoDataBase {
       ${TodoFields.starred} $booltype,
       FOREIGN KEY (${TodoFields.username}) REFERENCES $usertable (${UserFields.username})
     )''');
+
+    await db.execute('''CREATE TABLE $doingtable (
+      ${TodoFields.username} $texttype,
+      ${TodoFields.title} $texttype,
+      ${TodoFields.done} $booltype,
+      ${TodoFields.created} $texttype,
+      ${TodoFields.doing} $booltype,
+      ${TodoFields.starred} $booltype,
+      FOREIGN KEY (${TodoFields.username}) REFERENCES $usertable (${UserFields.username})
+    )''');
+
+    await db.execute('''CREATE TABLE $startable (
+      ${TodoFields.username} $texttype,
+      ${TodoFields.title} $texttype,
+      ${TodoFields.done} $booltype,
+      ${TodoFields.created} $texttype,
+      ${TodoFields.doing} $booltype,
+      ${TodoFields.starred} $booltype,
+      FOREIGN KEY (${TodoFields.username}) REFERENCES $usertable (${UserFields.username})
+    )''');
+
+    await db.execute('''CREATE TABLE $donetable (
+      ${TodoFields.username} $texttype,
+      ${TodoFields.title} $texttype,
+      ${TodoFields.done} $booltype,
+      ${TodoFields.created} $texttype,
+      ${TodoFields.doing} $booltype,
+      ${TodoFields.starred} $booltype,
+      FOREIGN KEY (${TodoFields.username}) REFERENCES $usertable (${UserFields.username})
+    )''');
   }
 
   Future _onConfigure(Database db) async {
@@ -110,52 +140,19 @@ class TodoDataBase {
     );
   }
 
-  Future<Todo> createTodo(Todo todo) async {
+  Future<Todo> createTodo(Todo todo, String table) async {
     final db = await instance.database;
     await db!.insert(
-      todotable,
+      table,
       todo.tojson(),
     );
     return todo;
   }
 
-  Future<int> toggletododone(Todo todo) async {
-    final db = await instance.database;
-    todo.done = !todo.done;
-    return db!.update(
-      todotable,
-      todo.tojson(),
-      where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
-      whereArgs: [todo.title, todo.username],
-    );
-  }
-
-  Future<int> toggletododstarred(Todo todo) async {
-    final db = await instance.database;
-    todo.starred = !todo.starred;
-    return db!.update(
-      todotable,
-      todo.tojson(),
-      where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
-      whereArgs: [todo.title, todo.username],
-    );
-  }
-
-  Future<int> toggletododdoing(Todo todo) async {
-    final db = await instance.database;
-    todo.doing = !todo.doing;
-    return db!.update(
-      todotable,
-      todo.tojson(),
-      where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
-      whereArgs: [todo.title, todo.username],
-    );
-  }
-
-  Future<List<Todo>> gettodo(String username) async {
+  Future<List<Todo>> gettodo(String username, String table) async {
     final db = await instance.database;
     final result = await db!.query(
-      todotable,
+      table,
       orderBy: '${TodoFields.created} DESC',
       where: '${TodoFields.username} = ?',
       whereArgs: [username],
@@ -163,12 +160,45 @@ class TodoDataBase {
     return result.map((e) => Todo.fromjson(e)).toList();
   }
 
-  Future<int> deleteTodo(Todo todo) async {
+  Future<int> deleteTodo(Todo todo, String table) async {
     final db = await instance.database;
     return db!.delete(
-      todotable,
+      table,
       where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
       whereArgs: [todo.title, todo.username],
     );
   }
+  // Future<int> toggletododone(Todo todo, String table) async {
+  //   final db = await instance.database;
+  //   todo.done = !todo.done;
+  //   return db!.update(
+  //     table,
+  //     todo.tojson(),
+  //     where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
+  //     whereArgs: [todo.title, todo.username],
+  //   );
+  // }
+
+  // Future<int> toggletododstarred(Todo todo, String table) async {
+  //   final db = await instance.database;
+  //   todo.starred = !todo.starred;
+  //   return db!.update(
+  //     table,
+  //     todo.tojson(),
+  //     where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
+  //     whereArgs: [todo.title, todo.username],
+  //   );
+  // }
+
+  // Future<int> toggletododdoing(Todo todo, String table) async {
+  //   final db = await instance.database;
+  //   todo.doing = !todo.doing;
+  //   return db!.update(
+  //     table,
+  //     todo.tojson(),
+  //     where: '${TodoFields.title} = ? AND ${TodoFields.username} = ?',
+  //     whereArgs: [todo.title, todo.username],
+  //   );
+  // }
+
 }

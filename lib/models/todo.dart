@@ -1,6 +1,9 @@
 import 'package:flutter/rendering.dart';
 
 const String todotable = 'todo';
+const String doingtable = 'doing';
+const String startable = 'star';
+const String donetable = 'done';
 
 class TodoFields {
   static const String username = 'username';
